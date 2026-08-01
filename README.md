@@ -1,4 +1,4 @@
-# Rockstar - Guess the Number (React + Vite)
+# Guess The Number (React + Vite)
 
 Tumhara purana game project ab React (Vite) me revive kar diya gaya hai. Sabkuch
 usi flow ke saath: intro animation → login/create account → home → number
@@ -25,16 +25,15 @@ src/
     AuthContext.jsx    -> login session state (localStorage me persist hota hai)
   components/
     ProtectedRoute.jsx -> bina login ke home/game/etc access nahi hoga
+    BackgroundFX.jsx   -> animated glowing background (orbs + grid)
   pages/
-    Intro.jsx          -> start button -> logo -> intro image -> login/create account
+    Intro.jsx          -> start button -> logo -> login/create account
     Home.jsx           -> home screen (game/scores/profile/multiplayer/leaderboard buttons)
     GameScreen.jsx      -> guess the number 1-100 game
     Profile.jsx
     Multiplayer.jsx
     Leaderboard.jsx
     ShowScore.jsx       -> player rankings table
-  assets/images/
-    Rockstar.png        -> tumhari original image, intro screen pe use hoti hai
 ```
 
 ## Music

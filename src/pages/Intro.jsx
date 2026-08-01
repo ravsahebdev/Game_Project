@@ -2,10 +2,9 @@ import { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { loginUser, createAccount } from '../api'
-import rockstarImg from '../assets/images/Rockstar.png'
 
 function Intro() {
-  // stage: start -> logo -> image -> login -> create
+  // stage: start -> logo -> login -> create
   const [stage, setStage] = useState('start')
 
   const [username, setUsername] = useState('')
@@ -37,19 +36,14 @@ function Intro() {
       })
     }
 
-    // 2.9s baad logo se image
+    // ~3.5s logo animation, then straight to login
     setTimeout(() => {
-      setStage('image')
-
-      // 2s baad image se login
-      setTimeout(() => {
-        if (introSoundRef.current) {
-          introSoundRef.current.pause()
-          introSoundRef.current.currentTime = 0
-        }
-        setStage('login')
-      }, 2000)
-    }, 2900)
+      if (introSoundRef.current) {
+        introSoundRef.current.pause()
+        introSoundRef.current.currentTime = 0
+      }
+      setStage('login')
+    }, 3500)
   }
 
   const handleLogin = async (e) => {
@@ -103,7 +97,7 @@ function Intro() {
           <button id="startButton" onClick={handleStart}>
             Let's Play
           </button>
-          <p className="intro-tagline">🎮 Guess the Secret Number · Rockstar Edition</p>
+          <p className="intro-tagline">🎮 Guess the Secret Number (1-100)</p>
         </div>
       )}
 
@@ -111,12 +105,6 @@ function Intro() {
         <div id="logo-container">
           <div id="logo">R</div>
           <div id="star">★</div>
-        </div>
-      )}
-
-      {stage === 'image' && (
-        <div id="intro-image">
-          <img src={rockstarImg} alt="Rockstar Intro" />
         </div>
       )}
 

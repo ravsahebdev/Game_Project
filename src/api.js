@@ -20,10 +20,10 @@ async function tryBackend(path, options) {
 }
 
 function getLocalUsers() {
-  return JSON.parse(localStorage.getItem('rockstar_users') || '[]')
+  return JSON.parse(localStorage.getItem('game_users') || '[]')
 }
 function saveLocalUsers(users) {
-  localStorage.setItem('rockstar_users', JSON.stringify(users))
+  localStorage.setItem('game_users', JSON.stringify(users))
 }
 
 export async function createAccount(userData) {
@@ -65,9 +65,9 @@ export async function addScore(username, score) {
   })
   if (result) return result
 
-  const scores = JSON.parse(localStorage.getItem('rockstar_scores') || '[]')
+  const scores = JSON.parse(localStorage.getItem('game_scores') || '[]')
   scores.push({ username, score, date: Date.now() })
-  localStorage.setItem('rockstar_scores', JSON.stringify(scores))
+  localStorage.setItem('game_scores', JSON.stringify(scores))
   return { success: true }
 }
 
@@ -75,6 +75,6 @@ export async function getScores() {
   const result = await tryBackend('/get-scores', { method: 'GET' })
   if (result) return result
 
-  const scores = JSON.parse(localStorage.getItem('rockstar_scores') || '[]')
+  const scores = JSON.parse(localStorage.getItem('game_scores') || '[]')
   return [...scores].sort((a, b) => a.score - b.score)
 }
