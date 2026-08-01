@@ -1,0 +1,239 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', 'Segoe UI', sans-serif;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+html, body, #root {
+  width: 100%;
+  min-height: 100vh;
+}
+
+body {
+  overflow-x: hidden;
+  background: linear-gradient(-45deg, #ff4e50, #fc913a, #f9d423, #00ffcc, #0099ff, #8e44ad);
+  background-size: 400% 400%;
+  animation: bgAnimation 12s ease infinite;
+}
+
+@keyframes bgAnimation {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.screen-wrapper {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  padding: 20px;
+}
+
+.card {
+  background: white;
+  padding: 30px;
+  border-radius: 14px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  text-align: center;
+  width: 100%;
+  max-width: 400px;
+  margin: 40px auto;
+  position: relative;
+}
+
+h2 {
+  font-size: 22px;
+  margin-bottom: 15px;
+  color: #222;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
+  font-size: 16px;
+  border: 2px solid #ddd;
+  border-radius: 6px;
+  outline: none;
+  text-align: center;
+}
+
+button {
+  margin-top: 12px;
+  width: 100%;
+  padding: 12px;
+  font-size: 15px;
+  background: #2b00ff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  text-transform: uppercase;
+  transition: background 0.25s ease, transform 0.15s ease;
+}
+
+button:hover {
+  background: #1400b8;
+  transform: translateY(-1px);
+}
+
+button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.back-btn {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  width: auto;
+  padding: 6px 14px;
+  font-size: 13px;
+  margin: 0;
+}
+
+.logout-btn {
+  background: #dc3545;
+}
+.logout-btn:hover {
+  background: #a71d2a;
+}
+
+#startButton {
+  padding: 16px 34px;
+  font-size: 22px;
+  background: #007bff;
+  width: auto;
+  box-shadow: 0 0 18px rgba(0, 123, 255, 0.8);
+}
+#startButton:hover {
+  background: #0056b3;
+  transform: scale(1.05);
+}
+
+#logo-container {
+  text-align: center;
+}
+#logo {
+  font-size: 84px;
+  font-weight: bold;
+  color: white;
+  animation: alive 1.4s ease-in-out infinite;
+}
+#star {
+  font-size: 32px;
+  color: gold;
+  margin-top: 10px;
+}
+
+@keyframes alive {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+}
+
+#intro-image img {
+  max-width: 320px;
+  max-height: 70vh;
+  object-fit: contain;
+  border-radius: 12px;
+  opacity: 1;
+  animation: fadeIn 1.6s ease-in-out;
+  box-shadow: 0 0 30px rgba(255, 255, 255, 0.4);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+#forgotPassword {
+  color: #007bff;
+  cursor: pointer;
+  margin: 10px 0;
+  font-size: 14px;
+}
+#forgotPassword:hover {
+  text-decoration: underline;
+}
+
+#message.correct { color: #16a34a; }
+#message.wrong { color: #dc2626; }
+#message.warning { color: #f59e0b; }
+#message.close { color: #ea580c; }
+
+#message {
+  min-height: 24px;
+  font-weight: 600;
+  margin: 6px 0;
+}
+
+#attempts {
+  margin-top: 10px;
+  font-weight: 600;
+  color: #333;
+}
+
+.confetti {
+  position: fixed;
+  top: -10px;
+  width: 10px;
+  height: 10px;
+  opacity: 0.85;
+  animation-name: fall;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+  pointer-events: none;
+  z-index: 999;
+}
+
+@keyframes fall {
+  0% { transform: translateY(-10vh) rotate(0deg); }
+  100% { transform: translateY(110vh) rotate(360deg); }
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+th, td {
+  padding: 8px;
+  border-bottom: 1px solid #eee;
+  text-align: center;
+}
+th {
+  background: #f5f5f5;
+}
+
+ul {
+  list-style: none;
+  text-align: left;
+}
+li {
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.home-links button {
+  cursor: pointer;
+}
+
+@media screen and (max-width: 480px) {
+  .card {
+    padding: 20px;
+  }
+  h2 {
+    font-size: 19px;
+  }
+}
