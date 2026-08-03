@@ -6,7 +6,7 @@ import './App.css'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <BrowserRouter>
+    <BrowserRouter basename="/Game_Project">
       <App />
     </BrowserRouter>
   </StrictMode>,

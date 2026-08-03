@@ -29,7 +29,7 @@ function GameScreen() {
   const navigate = useNavigate()
 
   useEffect(() => {
-    const bg = new Audio('/music/Free_Fire_All.mp3')
+    const bg = new Audio(`${import.meta.env.BASE_URL}music/Free_Fire_All.mp3`)
     bg.loop = true
     bg.volume = 0.5
     bgMusicRef.current = bg
@@ -89,7 +89,7 @@ function GameScreen() {
         funnySoundRef.current.pause()
         funnySoundRef.current.currentTime = 0
       }
-      const funnySound = new Audio(`/music/${funnySounds[newAttempts]}`)
+      const funnySound = new Audio(`${import.meta.env.BASE_URL}music/${funnySounds[newAttempts]}`)
       funnySound.volume = 1.0
       if (bgMusicRef.current) bgMusicRef.current.volume = 0.2
       funnySound.play().catch(() => {})
@@ -115,7 +115,7 @@ function GameScreen() {
       } else {
         victorySrc = victorySounds[Math.floor(Math.random() * victorySounds.length)]
       }
-      const victorySound = new Audio(`/music/${victorySrc}`)
+      const victorySound = new Audio(`${import.meta.env.BASE_URL}music/${victorySrc}`)
       victorySound.play().catch(() => {})
       victorySound.onended = () => {
         if (bgMusicRef.current) bgMusicRef.current.volume = 0.5
@@ -123,14 +123,6 @@ function GameScreen() {
 
       createConfetti()
       addScore(user?.username || 'player1', newAttempts)
-
-      if (newAttempts === 1) {
-        const achievements = JSON.parse(localStorage.getItem('achievements')) || {
-          firstAttemptWins: 0,
-        }
-        achievements.firstAttemptWins++
-        localStorage.setItem('achievements', JSON.stringify(achievements))
-      }
     } else {
       if (Math.abs(userGuess - secretNumber) <= 5) {
         setMessage("🔥 You're very close! Try again!")

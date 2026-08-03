@@ -1,23 +1,22 @@
-// ----------------------------------------------------------------
-// Ye file backend (http://localhost:5000) ko call karti hai
-// (jaisa original backend.js / package.json me tha - Express + MongoDB).
-// Agar backend nahi chal raha, to automatically localStorage me
-// hi account/scores save ho jate hai - taki game bina backend ke
-// bhi turant khel sako. Jab tumhara Node/Express/Mongo server
-// ready ho jaye, ye khud usko use karna shuru kar dega.
-// ----------------------------------------------------------------
+// Shared game data (accounts, scores, live stats) via Firestore.
+// Falls back to this browser's localStorage only if Firebase hasn't
+// been configured yet in src/firebaseConfig.js.
 
-const API_BASE = 'http://localhost:5000'
-
-async function tryBackend(path, options) {
-  try {
-    const res = await fetch(`${API_BASE}${path}`, options)
-    if (!res.ok) throw new Error('Server error')
-    return await res.json()
-  } catch (err) {
-    return null // backend uplabdh nahi hai -> fallback use karo
-  }
-}
+import { db } from './firebaseConfig'
+import {
+  doc,
+  getDoc,
+  setDoc,
+  updateDoc,
+  addDoc,
+  collection,
+  query,
+  orderBy,
+  limit,
+  getDocs,
+  onSnapshot,
+  increment,
+} from 'firebase/firestore'
 
 function getLocalUsers() {
   return JSON.parse(localStorage.getItem('game_users') || '[]')
@@ -27,54 +26,114 @@ function saveLocalUsers(users) {
 }
 
 export async function createAccount(userData) {
-  const result = await tryBackend('/create-account', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(userData),
-  })
-  if (result) return result
-
-  const users = getLocalUsers()
-  if (users.some((u) => u.username === userData.username)) {
-    return { success: false, message: 'Ye username pehle se maujood hai!' }
+  if (!db) {
+    const users = getLocalUsers()
+    if (users.some((u) => u.username === userData.username)) {
+      return { success: false, message: 'Ye username pehle se maujood hai!' }
+    }
+    users.push(userData)
+    saveLocalUsers(users)
+    return { success: true, user: userData }
   }
-  users.push(userData)
-  saveLocalUsers(users)
-  return { success: true, user: userData }
+
+  try {
+    const ref = doc(db, 'users', userData.username)
+    const existing = await getDoc(ref)
+    if (existing.exists()) {
+      return { success: false, message: 'Ye username pehle se maujood hai!' }
+    }
+    const newUser = {
+      ...userData,
+      gamesPlayed: 0,
+      bestScore: null,
+      firstTryWins: 0,
+      createdAt: Date.now(),
+    }
+    await setDoc(ref, newUser)
+    return { success: true, user: newUser }
+  } catch (err) {
+    console.error('[createAccount] Firestore error:', err)
+    return { success: false, message: 'Connection error, dobara try karo.' }
+  }
 }
 
 export async function loginUser(username, password) {
-  const result = await tryBackend('/login', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ username, password }),
-  })
-  if (result) return result
+  if (!db) {
+    const users = getLocalUsers()
+    const found = users.find((u) => u.username === username && u.password === password)
+    if (found) return { success: true, user: found }
+    return { success: false, message: 'Galat username ya password.' }
+  }
 
-  const users = getLocalUsers()
-  const found = users.find((u) => u.username === username && u.password === password)
-  if (found) return { success: true, user: found }
-  return { success: false, message: 'Galat username ya password.' }
+  try {
+    const ref = doc(db, 'users', username)
+    const snap = await getDoc(ref)
+    if (!snap.exists()) return { success: false, message: 'Ye username maujood nahi hai.' }
+    const user = snap.data()
+    if (user.password !== password) return { success: false, message: 'Galat password.' }
+    return { success: true, user }
+  } catch (err) {
+    console.error('[loginUser] Firestore error:', err)
+    return { success: false, message: 'Connection error, dobara try karo.' }
+  }
 }
 
 export async function addScore(username, score) {
-  const result = await tryBackend('/add-score', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ username, score }),
-  })
-  if (result) return result
+  if (!db) {
+    const scores = JSON.parse(localStorage.getItem('game_scores') || '[]')
+    scores.push({ username, score, date: Date.now() })
+    localStorage.setItem('game_scores', JSON.stringify(scores))
+    if (score === 1) {
+      const achievements = JSON.parse(localStorage.getItem('achievements')) || { firstAttemptWins: 0 }
+      achievements.firstAttemptWins++
+      localStorage.setItem('achievements', JSON.stringify(achievements))
+    }
+    return { success: true }
+  }
 
-  const scores = JSON.parse(localStorage.getItem('game_scores') || '[]')
-  scores.push({ username, score, date: Date.now() })
-  localStorage.setItem('game_scores', JSON.stringify(scores))
-  return { success: true }
+  try {
+    await addDoc(collection(db, 'scores'), { username, score, date: Date.now() })
+
+    const userRef = doc(db, 'users', username)
+    const snap = await getDoc(userRef)
+    if (snap.exists()) {
+      const data = snap.data()
+      const bestScore = data.bestScore == null ? score : Math.min(data.bestScore, score)
+      const updates = { gamesPlayed: increment(1), bestScore }
+      if (score === 1) updates.firstTryWins = increment(1)
+      await updateDoc(userRef, updates)
+    }
+    return { success: true }
+  } catch (err) {
+    console.error('[addScore] Firestore error:', err)
+    return { success: false }
+  }
 }
 
-export async function getScores() {
-  const result = await tryBackend('/get-scores', { method: 'GET' })
-  if (result) return result
+export async function getScores(limitCount = 20) {
+  if (!db) {
+    const scores = JSON.parse(localStorage.getItem('game_scores') || '[]')
+    return [...scores].sort((a, b) => a.score - b.score).slice(0, limitCount)
+  }
 
-  const scores = JSON.parse(localStorage.getItem('game_scores') || '[]')
-  return [...scores].sort((a, b) => a.score - b.score)
+  try {
+    const q = query(collection(db, 'scores'), orderBy('score', 'asc'), limit(limitCount))
+    const snap = await getDocs(q)
+    return snap.docs.map((d) => d.data())
+  } catch (err) {
+    console.error('[getScores] Firestore error:', err)
+    return []
+  }
+}
+
+// Live subscription to a user's profile stats (games played, best score, etc).
+// Returns an unsubscribe function. No-ops (returns a dummy unsubscribe) if
+// Firebase isn't configured, since local mode has no realtime concept.
+export function subscribeToUser(username, callback) {
+  if (!db || !username) return () => {}
+  const ref = doc(db, 'users', username)
+  const unsubscribe = onSnapshot(ref, (snap) => {
+    if (snap.exists()) callback(snap.data())
+  })
+  return unsubscribe
 }

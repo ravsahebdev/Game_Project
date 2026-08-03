@@ -90,7 +90,7 @@ function Intro() {
 
   return (
     <div className="screen-wrapper">
-      <audio ref={introSoundRef} src="/music/game_new.mp3" />
+      <audio ref={introSoundRef} src={`${import.meta.env.BASE_URL}music/game_new.mp3`} />
 
       {stage === 'start' && (
         <div style={{ textAlign: 'center' }}>
