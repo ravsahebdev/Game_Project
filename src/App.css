@@ -262,7 +262,7 @@ button:disabled {
   color: var(--cyan);
   cursor: pointer;
   margin: 10px 0;
-  font-size: 13px;
+  font-size: 12.8px;
 }
 #forgotPassword:hover { text-decoration: underline; }
 
