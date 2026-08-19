@@ -207,7 +207,7 @@ button:disabled {
   box-shadow: none;
 }
 .back-btn:hover {
-  background: rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.15);
   box-shadow: none;
   transform: translateY(-1px);
 }
