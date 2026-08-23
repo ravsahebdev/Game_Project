@@ -179,7 +179,7 @@ button:hover {
   box-shadow: 0 10px 28px rgba(0, 229, 255, 0.4);
   filter: brightness(1.08);
 }
-button:active { transform: translateY(0) scale(0.97); }
+button:active { transform: translateY(0) scale(0.98); }
 
 button:disabled {
   background: rgba(255, 255, 255, 0.12);
