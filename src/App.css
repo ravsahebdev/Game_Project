@@ -446,7 +446,7 @@ li {
   gap: 4px;
   padding: 16px 6px;
   border-radius: 14px;
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.06);
   border: 1px solid var(--glass-border);
 }
 
