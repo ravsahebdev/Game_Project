@@ -392,7 +392,7 @@ th {
   letter-spacing: 1px;
   text-transform: uppercase;
   color: var(--text-dim);
-  background: rgba(255, 255, 255, 0.04);
+  background: rgba(255, 255, 255, 0.05);
 }
 tbody tr:hover { background: rgba(255, 255, 255, 0.06); }
 
