@@ -316,7 +316,7 @@ button:disabled {
   transform: translateY(-4px);
   background: rgba(255, 255, 255, 0.1);
   border-color: var(--cyan);
-  box-shadow: 0 10px 26px rgba(0, 229, 255, 0.25);
+  box-shadow: 0 10px 26px rgba(0, 229, 255, 0.26);
 }
 
 .tile.tile-cyan:hover { border-color: var(--cyan); box-shadow: 0 10px 26px rgba(0, 229, 255, 0.3); }
