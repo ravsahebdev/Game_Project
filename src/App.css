@@ -294,7 +294,7 @@ button:disabled {
   gap: 8px;
   padding: 22px 10px;
   border-radius: 18px;
-  background: rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.05);
   border: 1px solid var(--glass-border);
   color: var(--text-light);
   font-size: 12px;
