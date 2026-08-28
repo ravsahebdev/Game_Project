@@ -419,7 +419,7 @@ li {
   font-weight: 700;
   color: #08060f;
   background: linear-gradient(135deg, var(--cyan), var(--magenta));
-  box-shadow: 0 0 30px rgba(255, 46, 196, 0.34);
+  box-shadow: 0 0 30px rgba(255, 46, 196, 0.33);
 }
 
 .profile-name {
