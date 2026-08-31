@@ -319,7 +319,7 @@ button:disabled {
   box-shadow: 0 10px 26px rgba(0, 229, 255, 0.26);
 }
 
-.tile.tile-cyan:hover { border-color: var(--cyan); box-shadow: 0 10px 26px rgba(0, 229, 255, 0.3); }
+.tile.tile-cyan:hover { border-color: var(--cyan); box-shadow: 0 10px 26px rgba(0, 229, 255, 0.4); }
 .tile.tile-magenta:hover { border-color: var(--magenta); box-shadow: 0 10px 26px rgba(255, 46, 196, 0.3); }
 .tile.tile-gold:hover { border-color: var(--gold); box-shadow: 0 10px 26px rgba(255, 210, 63, 0.3); }
 .tile.tile-green:hover { border-color: var(--green); box-shadow: 0 10px 26px rgba(45, 255, 176, 0.3); }
