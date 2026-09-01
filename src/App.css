@@ -170,7 +170,7 @@ button {
   text-transform: uppercase;
   color: #08060f;
   background: linear-gradient(135deg, var(--cyan), var(--magenta));
-  box-shadow: 0 6px 22px rgba(255, 46, 196, 0.3);
+  box-shadow: 0 6px 22px rgba(255, 46, 196, 0.4);
   transition: transform 0.15s ease, box-shadow 0.25s ease, filter 0.2s ease;
 }
 
