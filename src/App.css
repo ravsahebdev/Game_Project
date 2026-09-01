@@ -394,7 +394,7 @@ th {
   color: var(--text-dim);
   background: rgba(255, 255, 255, 0.05);
 }
-tbody tr:hover { background: rgba(255, 255, 255, 0.06); }
+tbody tr:hover { background: rgba(255, 255, 255, 0.05); }
 
 ul { list-style: none; text-align: left; }
 li {
