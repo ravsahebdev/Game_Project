@@ -309,7 +309,7 @@ button:disabled {
 
 .tile .tile-icon {
   font-size: 30px;
-  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.26));
+  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.25));
 }
 
 .tile:hover {
