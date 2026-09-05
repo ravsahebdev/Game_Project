@@ -352,7 +352,7 @@ button:disabled {
 .message-banner.correct { color: var(--green); background: rgba(45, 255, 176, 0.1); }
 .message-banner.wrong { color: var(--red); background: rgba(255, 77, 109, 0.1); }
 .message-banner.warning { color: var(--gold); background: rgba(255, 210, 63, 0.1); }
-.message-banner.close { color: #ff9f4d; background: rgba(255, 159, 77, 0.12); }
+.message-banner.close { color: #ff9f4d; background: rgba(255, 159, 77, 0.13); }
 .message-banner:empty { background: transparent; padding: 0; }
 
 .confetti {
