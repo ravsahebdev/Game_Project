@@ -250,7 +250,7 @@ button:disabled {
   font-size: 34px;
   color: var(--gold);
   margin-top: 8px;
-  filter: drop-shadow(0 0 12px rgba(255, 210, 63, 0.8));
+  filter: drop-shadow(0 0 12px rgba(255, 210, 63, 0.9));
 }
 
 @keyframes alive {
