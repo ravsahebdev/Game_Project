@@ -462,7 +462,7 @@ li {
 
 .stat-label {
   font-size: 10px;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.6px;
   text-transform: uppercase;
   color: var(--text-dim);
 }
